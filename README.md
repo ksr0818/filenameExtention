@@ -4,6 +4,13 @@
 
 임시 서버주소 : https://df0f-118-32-224-80.ngrok-free.app/my-page
 
+### ERD
+![filenameExtention_erd](https://github.com/ksr0818/filenameExtention/assets/120084774/5604bdd7-b7e9-44be-8887-1f7e277c8146)
+
+id :  저장시 부여되는 고유 번호 </br>
+value : 파일 확장자명을 의미 </br>
+category : 커스텀확장자인지 고정확장자인지를 구분(check / text) </br>
+
 ### OverView
 ![image](https://github.com/ksr0818/filenameExtention/assets/120084774/1fe955b2-c22a-4741-aab9-656d498c59f1)
 
