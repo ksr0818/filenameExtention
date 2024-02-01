@@ -5,12 +5,14 @@ import flow.team.domain.file.repository.FileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.*;
 
 @Controller
 @Slf4j
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MyController {
     private final FileRepository repository;
 

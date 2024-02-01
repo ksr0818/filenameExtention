@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://ec2-13-125-193-97.ap-northeast-2.compute.amazonaws.com:8090", allowedHeaders = "*")
 public class FileController {
 
     private final FileService service;
