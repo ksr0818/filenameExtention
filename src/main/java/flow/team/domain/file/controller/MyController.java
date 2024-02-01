@@ -36,12 +36,11 @@ public class MyController {
             textOptions.add(textFile.get(i).getValue());
         }
 
-
+        int textFileSize = textOptions.size();
 
 
         // 각 체크박스의 상태를 저장하는 맵을 생성합니다.
         Map<String, Boolean> checkboxStates = new LinkedHashMap<>();
-        log.error("checkedOptions :" + checkedOptions);
         // 체크박스 목록을 순회하면서 선택 여부를 확인합니다.
         for (String option : checkboxOptions) {
             if (checkedOptions.contains(option)) {
@@ -51,8 +50,6 @@ public class MyController {
             }
         }
 
-        log.error("checkboxStates : " + checkboxStates);
-
         // 입력창 목록을 만듭니다.
         String inputFields = "";
 
@@ -61,6 +58,7 @@ public class MyController {
         model.addAttribute("checkboxStates", checkboxStates);
         model.addAttribute("inputFields", inputFields);
         model.addAttribute("textOptions", textOptions);
+        model.addAttribute("textFileSize", textFileSize);
 
         return "my-page";
     }
