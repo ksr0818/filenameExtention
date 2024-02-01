@@ -126,10 +126,13 @@
 </style>
 
 <div class="data-list-container">
+    <p>
+        <span th:text="${textFileSize}"></span> / 200
+    </p>
     <ul class="data-list">
         <li th:each="textOption : ${textOptions}">
             <span th:text="${textOption}"></span>
-            <button class="delete-button" th:data-value="${textOption}">삭제</button>
+            <button class="delete-button" th:data-value="${textOption}">X</button>
         </li>
     </ul>
 </div>
