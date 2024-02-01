@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(":checkbox").change(function(){
+                var data = JSON.stringify({ value: $(this).val(), category: "check" });
+
+                if(this.checked){
+                    $.ajax({
+                        url: "http://localhost:8080/files",
+                        type: 'POST',
+                        contentType: "application/json",
+                        data: data,
+                        success: function(data) {
+                            // 체크박스가 체크됐을 때 서버로부터 반환된 데이터를 처리하는 코드
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "http://localhost:8080/files",
+                        type: this.checked ? 'POST' : 'DELETE',
+                        contentType: "application/json",
+                        data: data,
+                        success: function(data) {
+                            // 체크박스가 해제됐을 때 서버로부터 반환된 데이터를 처리하는 코드
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            $(".add-button").click(function(){
+                var inputId = $(this).prev().attr("id");
+                var inputValue = $(this).prev().val();
+                var inputData = JSON.stringify( { value: inputValue, category: "text" } );
+
+                $.ajax({
+                    url: "http://localhost:8080/files",
+                    type: 'POST',
+                    contentType: "application/json",
+                    data: inputData,
+                    success: function(data) {
+                        // "추가" 버튼이 클릭됐을 때 서버로부터 반환된 데이터를 처리하는 코드
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 400) {
+                            alert(xhr.responseJSON.message);
+                        }
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function(){
+            $(".delete-button").click(function(){
+                var data = JSON.stringify({ value: $(this).attr("data-value"), category: "text" });
+
+                $.ajax({
+                    url: "http://localhost:8080/files",
+                    type: 'DELETE',
+                    contentType: "application/json",
+                    data: data,
+                    success: function(data) {
+                        // 삭제 버튼이 클릭됐을 때 서버로부터 반환된 데이터를 처리하는 코드
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <meta charset="UTF-8"/>
+    <title>My Page</title>
+</head>
+<body>
+<h2>고정 확장자</h2>
+<form>
+    <div th:each="option : ${checkboxOptions}" style="display: inline-block;">
+        <label th:for="${#strings.replace(option, ' ', '_')}">
+            <input type="checkbox" th:id="${#strings.replace(option, ' ', '_')}" th:name="checkboxOptions" th:value="${option}" th:checked="${checkboxStates.get(option)}"/>
+            <span th:text="${option}"></span>
+        </label>
+    </div>
+</form>
+
+<h2>커스텀 확장자</h2>
+<form>
+    <div th:each="field : ${inputFields}">
+        <label th:for="${#strings.replace(field, ' ', '_')}">
+            <span th:text="${field}"></span>
+            <input type="text" th:id="${#strings.replace(field, ' ', '_')}" th:name="inputFields" th:value="${field}" placeholder="확장자 입력"/>
+            <button class="add-button">추가</button>
+        </label>
+    </div>
+</form>
+
+<h2>목록</h2>
+<style>
+    .data-list-container {
+        border: 2px solid black;
+        border-radius: 10px 5px;
+        padding: 5px;
+        height: 50vh; /* 화면의 반정도 높이로 설정 */
+        width: 50vb;
+        overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+        overflow-x: auto;
+        white-space: nowrap; /* 텍스트 줄바꿈을 방지하여 옆으로 나열되도록 함 */
+    }
+
+    .data-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 10px;
+        padding: 0;
+    }
+
+    .data-list li {
+        margin-right: 5px; /* 가로 간격을 반으로 줄임 */
+        margin-bottom: 10px;
+        width: 50%; /* 가로를 반으로 설정 */
+    }
+</style>
+
+<div class="data-list-container">
+    <ul class="data-list">
+        <li th:each="textOption : ${textOptions}">
+            <span th:text="${textOption}"></span>
+            <button class="delete-button" th:data-value="${textOption}">삭제</button>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
