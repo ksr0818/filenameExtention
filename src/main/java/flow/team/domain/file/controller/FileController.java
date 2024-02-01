@@ -41,13 +41,16 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
         }
 
-        // 커스텀확장자에 고정 확장자가 포함 된 경우 에러 발생
-//        for (int i =0; i < 7; i++) {
-//            if (requestBody.getValue().equals(FixFile.getFixFiles(i).getFile())) {
-//                String errorMessage = "고정 확장자에 이미 존재합니다.";
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-//            }
-//        }
+//         커스텀확장자에 고정 확장자가 포함 된 경우 에러 발생
+        if(requestBody.getCategory().equals("text")) {
+            for (int i =0; i < 7; i++) {
+                if (requestBody.getValue().equals(FixFile.getFixFiles(i).getFile())) {
+                    String errorMessage = "고정 확장자에 이미 존재합니다.";
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+                }
+            }
+        }
+
 
         File savedFile = service.saveFile(file);
         return new ResponseEntity((mapper.fileToFileResponseDto(savedFile)), HttpStatus.CREATED);
