@@ -2,7 +2,7 @@
 파일 확장자 차단
  - 파일 확장자에 따라 특정 형식의 파일을 첨부하거나 전송하지 못하도록 제한
 
-서버 주소 : http://ec2-13-125-193-97.ap-northeast-2.compute.amazonaws.com:8090/my-page
+배포 주소 : http://ec2-13-125-193-97.ap-northeast-2.compute.amazonaws.com:8090/my-page
 
 ### ERD
 ![filenameExtention_erd](https://github.com/ksr0818/filenameExtention/assets/120084774/5604bdd7-b7e9-44be-8887-1f7e277c8146)
