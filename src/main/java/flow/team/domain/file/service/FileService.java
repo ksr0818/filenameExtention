@@ -20,9 +20,7 @@ public class FileService {
     public List<File> getTextFile() {
         return repository.findAllByCategory("text");
     }
-    public List<File> getAllFile() {
-        return repository.findAll();
-    }
+
 
     public boolean existValue(String value) {
         return repository.existsByValue(value);

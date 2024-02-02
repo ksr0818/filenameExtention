@@ -43,6 +43,7 @@ public class MyController {
 
         // 각 체크박스의 상태를 저장하는 맵을 생성합니다.
         Map<String, Boolean> checkboxStates = new LinkedHashMap<>();
+
         // 체크박스 목록을 순회하면서 선택 여부를 확인합니다.
         for (String option : checkboxOptions) {
             if (checkedOptions.contains(option)) {

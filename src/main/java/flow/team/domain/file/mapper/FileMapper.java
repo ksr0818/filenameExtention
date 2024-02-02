@@ -30,6 +30,7 @@ public interface FileMapper {
         response.setFileId(file.getFileId());
         response.setValue(file.getValue());
         response.setCategory(file.getCategory());
+
         return response;
     }
 

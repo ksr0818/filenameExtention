@@ -24,6 +24,9 @@ public class FileController {
 
     private final FileService service;
     private final FileMapper mapper;
+
+    // 고정 확장자 체크 및 커스텀확장자 입력 후 추가 버튼 누를 시 실행
+    // db에 저장
     @PostMapping
     public ResponseEntity PostFile(@Validated @RequestBody FileDto.Post requestBody) {
         File file = mapper.filePostDtoToFile(requestBody);
@@ -41,7 +44,7 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
         }
 
-//         커스텀확장자에 고정 확장자가 포함 된 경우 에러 발생
+        // 커스텀확장자에 고정 확장자가 포함 된 경우 에러 발생
         if(requestBody.getCategory().equals("text")) {
             for (int i =0; i < 7; i++) {
                 if (requestBody.getValue().equals(FixFile.getFixFiles(i).getFile())) {
@@ -51,20 +54,28 @@ public class FileController {
             }
         }
 
-
+        // db에 저장하는 로직
         File savedFile = service.saveFile(file);
+
         return new ResponseEntity((mapper.fileToFileResponseDto(savedFile)), HttpStatus.CREATED);
     }
 
+    // 커스텀 확장자 조회(category가 text값을 갖는 경우)
     @GetMapping
     public ResponseEntity getTextFile() {
+        // db 조회 로직
         List<File> files =service.getTextFile();
+
         return new ResponseEntity(mapper.filesToFileResponseDtos(files), HttpStatus.OK);
     }
 
+    // 고정 확장자 체크해제 및 커스텀확장자 X 버튼 누를 시 실행
+    // db에서 삭제
     @DeleteMapping
     public ResponseEntity DeleteFile(@RequestBody FileDto.Delete requestBody) {
+        // db에서 삭제하는 로직
         service.deleteFile(requestBody);
+
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
